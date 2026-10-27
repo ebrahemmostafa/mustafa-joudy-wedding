@@ -17,7 +17,7 @@ All text, the date, venue, programme and the Supabase keys are in [`config.js`](
   ```
 
   Needs Python with `opencv-python`, `numpy`, `pillow`, and `ffmpeg` on the PATH.
-- **RSVPs (Supabase):** replies are saved to the Supabase project `mustafa-joudy-wedding-rsvp`; its URL and publishable key are in `config.js`, and the table, access rules and functions are in [`supabase/rsvp.sql`](supabase/rsvp.sql). Guests can only add a reply. To read them, set a passcode (6+ characters) once in the Supabase SQL editor, then open `rsvp.html` and enter it. After 5 wrong tries from one internet address the list locks for that address for 15 minutes (others aren't affected); setting the passcode again clears every lock.
+- **RSVPs (Supabase):** replies are saved to the Supabase project `mustafa-joudy-wedding-rsvp`; its URL and publishable key are in `config.js`, and the table, access rules and functions are in [`supabase/rsvp.sql`](supabase/rsvp.sql). Guests can only add a reply. To read them, set a passcode (6+ characters) once in the Supabase SQL editor, then open `rsvp.html` and enter it. After 5 wrong tries from one internet address the list locks for that address for 15 minutes. If there are 30 wrong tries overall, devices that have never opened the list wait 15 minutes too, while devices that have still get in. Setting the passcode again clears every lock.
 
   ```sql
   select public.set_rsvp_passcode('your passcode');

@@ -147,6 +147,7 @@
         const why = {
           passcode: "That passcode isn't right.",
           locked: "Too many wrong tries. Wait 15 minutes, then try again.",
+          busy: "The guest list is paused after many wrong tries. Try again in 15 minutes.",
         };
         if (!quiet) $("#lockError").textContent = why[e.message] || "Couldn't reach the guest list. Check your connection and try again.";
       } finally {
