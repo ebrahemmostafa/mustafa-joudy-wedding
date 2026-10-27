@@ -130,6 +130,37 @@
     </section>
 
 
+    <!-- 8 · rsvp -->
+    <section class="paper rsvp" id="rsvp">
+      <h2 class="title" data-t="rsvpTitle"></h2>
+      <form class="form" id="rsvpForm" novalidate>
+        <label class="field">
+          <span data-t="fName"></span>
+          <input name="name" autocomplete="name" maxlength="120" required>
+          <em class="field__error" data-t="fNameError" hidden></em>
+        </label>
+        <fieldset class="choice">
+          <legend data-t="fAttend"></legend>
+          <label><input type="radio" name="attend" value="yes" checked><span data-t="fYes"></span></label>
+          <label><input type="radio" name="attend" value="no"><span data-t="fNo"></span></label>
+        </fieldset>
+        <label class="field" id="guestsField">
+          <span data-t="fGuests"></span>
+          <select name="guests"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </label>
+        <label class="field">
+          <span data-t="fMessage"></span>
+          <textarea name="message" rows="3" maxlength="1000"></textarea>
+        </label>
+        <button class="btn btn--velvet" type="submit" data-t="fSend"></button>
+        <p class="form__note" id="rsvpStatus" role="status" aria-live="polite"></p>
+      </form>
+      <div class="rsvp__thanks" id="rsvpThanks" hidden>
+        <p class="rsvp__thanks-title" data-t="thanksTitle"></p>
+        <p class="rsvp__thanks-line" id="rsvpThanksLine"></p>
+      </div>
+    </section>
+
     <!-- 9 · closing -->
     <section class="closing">
       <span class="closing__seal" id="seal" aria-hidden="true"></span>

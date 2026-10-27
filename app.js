@@ -20,6 +20,20 @@
       programmeTitle: "The evening",
       dressTitle: "Dress code",
       calTitle: "Wedding of {names}",
+      rsvpTitle: "Will you join us?",
+      fName: "Your name",
+      fNameError: "Write your name so we know who is coming.",
+      fAttend: "Will you attend?",
+      fYes: "Joyfully accepts",
+      fNo: "Regretfully declines",
+      fGuests: "Number of guests",
+      fMessage: "A note for the couple (optional)",
+      fSend: "Send reply",
+      fSending: "Sending…",
+      fFailed: "We couldn't send your reply. Please check your connection and try again.",
+      thanksTitle: "Thank you",
+      thanksYes: "{name}, we can't wait to see you on {date}.",
+      thanksNo: "{name}, we'll miss you. Thank you for letting us know.",
   };
 
   const names = () => `${C.couple.one} & ${C.couple.two}`;
@@ -241,6 +255,42 @@
   });
   calMenu.addEventListener("click", () => { calMenu.hidden = true; calBtn.setAttribute("aria-expanded", "false"); });
   document.addEventListener("click", (e) => { if (!e.target.closest(".calendar")) { calMenu.hidden = true; calBtn.setAttribute("aria-expanded", "false"); } });
+
+  /* ---------- rsvp ---------- */
+  const form = $("#rsvpForm");
+  const status = $("#rsvpStatus");
+  form.addEventListener("change", () => { $("#guestsField").hidden = form.attend.value === "no"; });
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const err = $(".field__error", form);
+    err.hidden = !!name;
+    form.name.setAttribute("aria-invalid", String(!name));
+    if (!name) { form.name.focus(); return; }
+    const yes = form.attend.value === "yes";
+    const send = $("button[type=submit]", form);
+    send.disabled = true;
+    send.textContent = t("fSending");
+    status.textContent = "";
+    status.classList.remove("is-error");
+    try {
+      const res = await fetch(`${C.supabase.url}/rest/v1/rsvps`, {
+        method: "POST",
+        headers: { apikey: C.supabase.key, "Content-Type": "application/json", Prefer: "return=minimal" },
+        body: JSON.stringify({ name, attending: yes, guests: yes ? Number(form.guests.value) : 0, message: form.message.value.trim() || null }),
+      });
+      if (!res.ok) throw new Error(res.status);
+      $("#rsvpThanksLine").textContent = t(yes ? "thanksYes" : "thanksNo")
+        .replace("{name}", name).replace("{date}", fmt({ day: "numeric", month: "long" }));
+      form.hidden = true;
+      $("#rsvpThanks").hidden = false;
+    } catch {
+      status.textContent = t("fFailed");
+      status.classList.add("is-error");
+      send.disabled = false;
+      send.textContent = t("fSend");
+    }
+  });
 
   apply();
 })();

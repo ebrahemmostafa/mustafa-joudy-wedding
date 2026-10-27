@@ -39,5 +39,12 @@ window.INVITE = {
     note: "Kindly keep white for the bride.",
   },
 
+  // RSVP replies are saved to Supabase (project "mustafa-joudy-wedding-rsvp", schema in supabase/rsvp.sql).
+  // The publishable key is meant for browsers: guests can only add replies with it.
+  supabase: {
+    url: "https://qnhfythwuicajjtlllrw.supabase.co",
+    key: "sb_publishable_MIGuuluNz2TN0PQM0SJQYw_qWD8tpDc",
+  },
+
   closing: "We can't wait to celebrate with you · Anter's Family",
 };
