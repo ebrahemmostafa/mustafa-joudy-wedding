@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f3b2e">
+  <meta name="color-scheme" content="only light">
+  <title>Mustafa &amp; Joudy</title>
+  <meta name="description" content="Mustafa &amp; Joudy · 11 December 2026 · InterContinental Cairo Semiramis">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="You're invited">
+  <meta property="og:image" content="assets/images/og-card.jpg">
+  <link rel="icon" href="assets/images/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant+SC:wght@400;500&family=Great+Vibes&display=swap">
+  <link rel="preload" as="image" href="assets/images/envelope.jpg" fetchpriority="high">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="is-sealed">
+
+  <!-- 1 · envelope -->
+  <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Open the invitation">
+    <img class="envelope__still" src="assets/images/envelope.jpg" alt="">
+    <video class="envelope__video" src="assets/video/envelope-open.mp4" muted playsinline preload="auto"></video>
+    <span class="envelope__hint" data-t="tapToOpen"></span>
+    <div class="envelope__veil"></div>
+  </div>
+
+  <button class="sound" id="soundToggle" type="button" aria-label="Mute music" hidden>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path class="on" d="M4 9v6h4l5 4V5L8 9H4zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/><path class="off" d="M4 9v6h4l5 4V5L8 9H4zm12.6 3 2.7-2.7-1.1-1.1-2.7 2.7-2.7-2.7-1.1 1.1 2.7 2.7-2.7 2.7 1.1 1.1 2.7-2.7 2.7 2.7 1.1-1.1z"/></svg>
+  </button>
+  <audio id="music" src="assets/audio/music.mp3" loop preload="none"></audio>
+
+  <main class="suite">
+
+    <!-- 2 · the couple walking -->
+    <section class="stage" id="stage" aria-label="Invitation">
+      <video class="stage__video" src="assets/video/hero-walk.mp4" poster="assets/images/hero-walk.jpg" muted loop playsinline preload="auto" aria-hidden="true"></video>
+      <div class="stage__shade" aria-hidden="true"></div>
+      <div class="stage__text">
+        <p class="stage__above" data-t="hero.above"></p>
+        <h1 class="names">
+          <span data-t="couple.one"></span>
+          <span class="names__joiner" data-t="couple.joiner"></span>
+          <span data-t="couple.two"></span>
+        </h1>
+        <p class="stage__below" data-t="hero.below"></p>
+      </div>
+      <a class="stage__scroll" href="#booth" data-t="scroll"></a>
+    </section>
+
+    <!-- 3 · photobooth -->
+    <section class="booth" id="booth">
+      <div class="booth__frame">
+        <img class="booth__plate" src="assets/images/photobooth.webp" alt="" loading="lazy">
+        <div class="booth__slot">
+          <div class="strip" id="strip" aria-hidden="true">
+            <div class="strip__shot"></div>
+            <div class="strip__shot"></div>
+            <div class="strip__shot"></div>
+            <p class="strip__foot"></p>
+          </div>
+        </div>
+        <div class="booth__text">
+          <p class="booth__line" data-t="boothLine"></p>
+          <button class="btn btn--metal" id="printBtn" type="button" data-t="print"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · the date -->
+    <section class="paper date" id="date">
+      <h2 class="title" data-t="dateTitle"></h2>
+      <div class="scratch" id="scratch">
+        <div class="scratch__date" aria-live="polite">
+          <span class="scratch__weekday" id="dWeekday"></span>
+          <span class="scratch__day" id="dDay"></span>
+          <span class="scratch__month" id="dMonth"></span>
+          <span class="scratch__year" id="dYear"></span>
+        </div>
+        <canvas class="scratch__foil" id="foil" aria-label="Scratch the gold to reveal the date" role="img"></canvas>
+      </div>
+      <p class="hint" id="scratchHint" data-t="scratchHint"></p>
+
+      <div class="countdown" id="countdown" aria-label="Countdown">
+        <div><b id="cDays"></b><span data-t="days"></span></div>
+        <div><b id="cHours"></b><span data-t="hours"></span></div>
+        <div><b id="cMins"></b><span data-t="mins"></span></div>
+        <div><b id="cSecs"></b><span data-t="secs"></span></div>
+      </div>
+
+      <div class="calendar">
+        <button class="btn btn--line" id="calBtn" type="button" aria-expanded="false" aria-controls="calMenu" data-t="addToCalendar"></button>
+        <div class="calendar__menu" id="calMenu" hidden>
+          <a id="calGoogle" target="_blank" rel="noopener">Google</a>
+          <a id="calApple" download="invitation.ics">Apple / iOS</a>
+          <a id="calOutlook" target="_blank" rel="noopener">Outlook</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · venue -->
+    <section class="paper venue">
+      <img class="venue__art" src="assets/images/venue.webp" alt="" loading="lazy">
+      <h2 class="title" data-t="venueTitle"></h2>
+      <p class="venue__name" data-t="venue.name"></p>
+      <p class="venue__address" data-t="venue.address"></p>
+      <p class="venue__time" id="venueTime"></p>
+      <a class="btn btn--line" id="mapLink" target="_blank" rel="noopener" data-t="openMap"></a>
+    </section>
+
+    <!-- 6 · programme -->
+    <section class="paper programme">
+      <div class="programme__frame">
+        <img src="assets/images/ribbon-frame.png" alt="" loading="lazy">
+        <div class="programme__inner">
+          <h2 class="title" data-t="programmeTitle"></h2>
+          <ol class="programme__list" id="programme"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · dress code -->
+    <section class="paper dress">
+      <h2 class="title" data-t="dressTitle"></h2>
+      <img class="dress__art" src="assets/images/dresscode.png" alt="" loading="lazy">
+      <p class="dress__name" data-t="dressCode.title"></p>
+      <p class="dress__note" data-t="dressCode.note"></p>
+    </section>
+
+    <!-- 8 · rsvp -->
+    <section class="paper rsvp" id="rsvp">
+      <h2 class="title" data-t="rsvpTitle"></h2>
+      <p class="rsvp__by" id="rsvpBy"></p>
+      <form class="form" id="rsvpForm" novalidate>
+        <label class="field">
+          <span data-t="fName"></span>
+          <input name="name" autocomplete="name" required>
+          <em class="field__error" data-t="fNameError" hidden></em>
+        </label>
+        <fieldset class="choice">
+          <legend data-t="fAttend"></legend>
+          <label><input type="radio" name="attend" value="yes" checked><span data-t="fYes"></span></label>
+          <label><input type="radio" name="attend" value="no"><span data-t="fNo"></span></label>
+        </fieldset>
+        <label class="field" id="guestsField">
+          <span data-t="fGuests"></span>
+          <select name="guests"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+        </label>
+        <label class="field">
+          <span data-t="fMessage"></span>
+          <textarea name="message" rows="3"></textarea>
+        </label>
+        <button class="btn btn--velvet" type="submit" data-t="fSend"></button>
+        <p class="form__note" data-t="fNote"></p>
+      </form>
+    </section>
+
+    <!-- 9 · closing -->
+    <section class="closing">
+      <span class="closing__seal" id="seal" aria-hidden="true"></span>
+      <p class="closing__line" data-t="closing"></p>
+      <p class="names names--small">
+        <span data-t="couple.one"></span>
+        <span class="names__joiner" data-t="couple.joiner"></span>
+        <span data-t="couple.two"></span>
+      </p>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
