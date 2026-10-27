@@ -52,18 +52,22 @@ revoke all on function public.set_rsvp_passcode(text) from public, anon, authent
 
 -- Returns {"ok": true, "rows": [...]} or {"ok": false, "error": "passcode" | "locked"}.
 -- It answers instead of raising so that a failed try is recorded, not rolled back.
--- Limits: 5 wrong tries per client and 20 overall in any 15 minutes (the overall
--- cap holds even if a client fakes its address).
+-- Limit: 5 wrong tries per client in any 15 minutes. The client is the address
+-- Cloudflare puts in cf-connecting-ip (Cloudflare rejects requests that set it
+-- themselves); X-Forwarded-For is ignored because callers can fake it. There is
+-- no overall cap, so nobody can lock the couple out by failing on purpose.
 drop function if exists public.list_rsvps(text);
 create function public.list_rsvps(passcode text)
 returns jsonb language plpgsql volatile security definer set search_path = '' as $$
 declare
   headers jsonb := coalesce(nullif(current_setting('request.headers', true), '')::jsonb, '{}'::jsonb);
-  who text := coalesce(headers ->> 'cf-connecting-ip', btrim(split_part(headers ->> 'x-forwarded-for', ',', 1)), 'unknown');
-  since timestamptz := now() - interval '15 minutes';
+  who text := coalesce(nullif(headers ->> 'cf-connecting-ip', ''), 'unknown');
 begin
-  if (select count(*) from private.login_attempts a where a.at > since and a.client = who) >= 5
-     or (select count(*) from private.login_attempts a where a.at > since) >= 20 then
+  -- one check at a time, so parallel requests can't all slip past the count
+  perform pg_advisory_xact_lock(hashtext('public.list_rsvps'));
+
+  if (select count(*) from private.login_attempts a
+      where a.client = who and a.at > now() - interval '15 minutes') >= 5 then
     return jsonb_build_object('ok', false, 'error', 'locked');
   end if;
 
