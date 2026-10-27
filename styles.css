@@ -253,12 +253,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .btn--metal:hover { filter: brightness(1.05); }
 .btn--line { color: var(--accent); border: 1px solid currentColor; background: transparent; }
 .btn--line:hover { background: var(--accent); color: var(--ivory); }
-.btn--velvet {
-  width: 100%;
-  color: var(--ivory); border: 0;
-  background: var(--velvet) url("assets/images/velvet.webp") center / 160px auto;
-}
-.btn--velvet:hover { filter: brightness(1.2); }
 
 /* ---------- paper sections ---------- */
 .paper {
@@ -358,32 +352,6 @@ button, input, select, textarea { font: inherit; color: inherit; }
 .dress__art { width: 92%; margin: 0 auto 1.6rem; mix-blend-mode: multiply; }
 .dress__name { margin: 0; font-size: 1.5rem; font-weight: 500; }
 .dress__note { margin: .3rem 0 0; font-style: italic; color: var(--muted); }
-
-/* ---------- 8 · rsvp ---------- */
-.rsvp__by { margin: -.8rem 0 2rem; font-style: italic; color: var(--muted); }
-.form { max-width: 360px; margin: 0 auto; text-align: start; display: grid; gap: 1.5rem; }
-.field { display: grid; gap: .25rem; }
-.field > span, .choice legend { font-size: 1rem; color: var(--muted); }
-.field input, .field select, .field textarea {
-  width: 100%; min-height: 44px; padding: .4rem 0;
-  border: 0; border-bottom: 1px solid var(--gold-lo); border-radius: 0;
-  background: transparent; font-size: 1.15rem; color: var(--ink);
-}
-.field textarea { resize: vertical; }
-.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-bottom: 2px solid var(--accent); }
-.field__error { font-style: normal; font-size: .95rem; color: #a3261c; }
-.choice { border: 0; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
-.choice legend { padding: 0; margin-bottom: .45rem; grid-column: 1 / -1; }
-.choice label { position: relative; }
-.choice input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
-.choice span {
-  display: grid; place-items: center; min-height: 46px; padding: .3rem .6rem;
-  border: 1px solid var(--gold); text-align: center; line-height: 1.2;
-  transition: background-color .2s, color .2s, border-color .2s;
-}
-.choice input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--ivory); }
-.choice input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
-.form__note { margin: -.6rem 0 0; font-size: .95rem; text-align: center; color: var(--gold-lo); }
 
 /* ---------- 9 · closing ---------- */
 .closing {

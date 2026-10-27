@@ -19,19 +19,6 @@
       openMap: "Open in Google Maps",
       programmeTitle: "The evening",
       dressTitle: "Dress code",
-      rsvpTitle: "Will you join us?",
-      rsvpBy: "Kindly reply by {date}",
-      fName: "Your name",
-      fNameError: "Write your name so we know who is coming.",
-      fAttend: "Will you attend?",
-      fYes: "Joyfully accepts",
-      fNo: "Regretfully declines",
-      fGuests: "Number of guests",
-      fMessage: "A note for the couple (optional)",
-      fSend: "Send reply on WhatsApp",
-      fNote: "Your reply opens in WhatsApp, ready to send.",
-      waTitle: "RSVP for {names}",
-      waName: "Name", waAttend: "Attending", waYes: "Yes", waNo: "No", waGuests: "Guests", waMsg: "Message",
       calTitle: "Wedding of {names}",
   };
 
@@ -74,9 +61,6 @@
       li.append(tm, sp);
       $("#programme").append(li);
     });
-
-    const deadline = new Date(`${C.rsvp.deadline}T12:00:00+02:00`);
-    $("#rsvpBy").textContent = t("rsvpBy").replace("{date}", fmt({ day: "numeric", month: "long" }, deadline));
 
     $(".strip__foot").textContent = new Intl.DateTimeFormat("en-GB", { timeZone: TZ, day: "2-digit", month: "2-digit", year: "numeric" }).format(when).replace(/\//g, ".");
     $$(".strip__shot--mono").forEach((el) => { el.textContent = `${C.couple.one[0]}&${C.couple.two[0]}`; });
@@ -257,27 +241,6 @@
   });
   calMenu.addEventListener("click", () => { calMenu.hidden = true; calBtn.setAttribute("aria-expanded", "false"); });
   document.addEventListener("click", (e) => { if (!e.target.closest(".calendar")) { calMenu.hidden = true; calBtn.setAttribute("aria-expanded", "false"); } });
-
-  /* ---------- rsvp ---------- */
-  const form = $("#rsvpForm");
-  form.addEventListener("change", () => { $("#guestsField").hidden = form.attend.value === "no"; });
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const name = form.name.value.trim();
-    const err = $(".field__error", form);
-    err.hidden = !!name;
-    form.name.setAttribute("aria-invalid", String(!name));
-    if (!name) { form.name.focus(); return; }
-    const yes = form.attend.value === "yes";
-    const lines = [
-      t("waTitle").replace("{names}", names()),
-      `${t("waName")}: ${name}`,
-      `${t("waAttend")}: ${yes ? t("waYes") : t("waNo")}`,
-    ];
-    if (yes) lines.push(`${t("waGuests")}: ${form.guests.value}`);
-    if (form.message.value.trim()) lines.push(`${t("waMsg")}: ${form.message.value.trim()}`);
-    window.open(`https://wa.me/${C.rsvp.whatsapp}?text=${encodeURIComponent(lines.join("\n"))}`, "_blank", "noopener");
-  });
 
   apply();
 })();

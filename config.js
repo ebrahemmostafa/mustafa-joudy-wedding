@@ -39,11 +39,5 @@ window.INVITE = {
     note: "Kindly keep white for the bride.",
   },
 
-  rsvp: {
-    // WhatsApp number that receives replies, international format without "+"
-    whatsapp: "201000000000",
-    deadline: "2026-11-25",
-  },
-
   closing: "We can't wait to celebrate with you · Anter's Family",
 };

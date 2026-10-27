@@ -2,11 +2,11 @@
 
 A single-page wedding invitation in emerald and gold that mixes two templates: the envelope and photobooth from one, and the scratch-to-reveal date, menu frame and dress code from the other.
 
-**Flow:** tap the envelope to open it → a background video of the couple walking hand in hand reveals the names → the gold photobooth prints a photo strip → scratch the gold disc to reveal the date (with countdown and add-to-calendar) → venue → programme → dress code → RSVP over WhatsApp.
+**Flow:** tap the envelope to open it → a background video of the couple walking hand in hand reveals the names → the gold photobooth prints a photo strip → scratch the gold disc to reveal the date (with countdown and add-to-calendar) → venue → programme → dress code.
 
 ## Edit the content
 
-All text, the date, venue, programme and the WhatsApp number for RSVPs are in [`config.js`](config.js).
+All text, the date, venue and programme are in [`config.js`](config.js).
 
 - **Photobooth strip:** `python tools/make_booth.py` renders the three shots (names, date, time + venue) from `config.js` into `assets/photos/`. To use your own photos instead, put up to 3 images in `assets/photos/` and list them in `photos` in `config.js`. They print in black and white.
 - **Initials on the envelope:** the envelope image and opening video are rendered with your initials:
