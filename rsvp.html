@@ -114,6 +114,13 @@
       set: (v) => { try { sessionStorage.setItem(KEY, v); } catch {} },
       clear: () => { try { sessionStorage.removeItem(KEY); } catch {} },
     };
+    // device key from the server after a successful open: lets this browser in even
+    // when the list is paused for unknown devices after a flood of wrong tries
+    const DEVICE = "rsvp-device";
+    const device = {
+      get: () => { try { return localStorage.getItem(DEVICE); } catch { return null; } },
+      set: (v) => { try { localStorage.setItem(DEVICE, v); } catch {} },
+    };
     let rows = [], filter = "all", passcode = null;
 
     $("#names").textContent = `${C.couple.one} & ${C.couple.two}`;
@@ -123,11 +130,12 @@
       const res = await fetch(`${C.supabase.url}/rest/v1/rpc/list_rsvps`, {
         method: "POST",
         headers: { apikey: C.supabase.key, "Content-Type": "application/json" },
-        body: JSON.stringify({ passcode: code }),
+        body: JSON.stringify({ passcode: code, device: device.get() }),
       });
       if (!res.ok) throw new Error("network");
       const out = await res.json();
-      if (!out.ok) throw new Error(out.error); // "passcode" or "locked"
+      if (!out.ok) throw new Error(out.error); // "passcode", "locked" or "busy"
+      if (out.device) device.set(out.device);
       return out.rows;
     }
 
