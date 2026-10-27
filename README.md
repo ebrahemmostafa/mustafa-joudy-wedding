@@ -13,7 +13,7 @@ All text, the date, venue, programme and the WhatsApp number for RSVPs are in [`
 
   ```bash
   python tools/personalize_envelope.py --initials "M&J"
-  python tools/personalize_envelope.py --initials "M&J" --photo tools/source/flow/oval-veil.jpg   # a photo in the oval (plain emerald velvet without --photo)
+  python tools/personalize_envelope.py --initials "M&J" --photo tools/source/flow/oval-rings.jpg   # a photo in the oval (plain emerald velvet without --photo)
   ```
 
   Needs Python with `opencv-python`, `numpy`, `pillow`, and `ffmpeg` on the PATH.

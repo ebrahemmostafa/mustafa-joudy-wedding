@@ -1,7 +1,7 @@
 /*
   Everything you need to edit lives in this file.
   After changing the initials, rebuild the envelope:
-    python tools/personalize_envelope.py --initials "M&J" --photo tools/source/flow/oval-veil.jpg
+    python tools/personalize_envelope.py --initials "M&J" --photo tools/source/flow/oval-rings.jpg
   After changing the names or date, rebuild the photobooth strip:
     python tools/make_booth.py
 */
