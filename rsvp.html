@@ -125,9 +125,10 @@
         headers: { apikey: C.supabase.key, "Content-Type": "application/json" },
         body: JSON.stringify({ passcode: code }),
       });
-      if (res.status === 401 || res.status === 403) throw new Error("passcode");
       if (!res.ok) throw new Error("network");
-      return res.json();
+      const out = await res.json();
+      if (!out.ok) throw new Error(out.error); // "passcode" or "locked"
+      return out.rows;
     }
 
     async function open(code, quiet) {
@@ -143,7 +144,11 @@
         render();
       } catch (e) {
         store.clear();
-        if (!quiet) $("#lockError").textContent = e.message === "passcode" ? "That passcode isn't right." : "Couldn't reach the guest list. Check your connection and try again.";
+        const why = {
+          passcode: "That passcode isn't right.",
+          locked: "Too many wrong tries. Wait 15 minutes, then try again.",
+        };
+        if (!quiet) $("#lockError").textContent = why[e.message] || "Couldn't reach the guest list. Check your connection and try again.";
       } finally {
         btn.disabled = false;
       }
@@ -181,7 +186,12 @@
     }
 
     function csv() {
-      const cell = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+      // guests type names and notes, so anything a spreadsheet would run as a formula stays text
+      const cell = (v) => {
+        let s = String(v ?? "");
+        if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+        return `"${s.replace(/"/g, '""')}"`;
+      };
       const lines = [["Name", "Attending", "Guests", "Message", "Replied at (Cairo)"].map(cell).join(",")];
       rows.forEach((r) => lines.push([r.name, r.attending ? "Yes" : "No", r.attending ? r.guests : 0, r.message, when(r.created_at)].map(cell).join(",")));
       const url = URL.createObjectURL(new Blob(["﻿" + lines.join("\r\n")], { type: "text/csv;charset=utf-8" }));
